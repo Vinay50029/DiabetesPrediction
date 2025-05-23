@@ -5,5 +5,5 @@ lightgbm
 scikit-learn
 opencv-python  
 tensorflow       
-keras            
+ker           
 pillow           
