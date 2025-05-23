@@ -1,10 +1,7 @@
 venv/
 __pycache__/
 *.pyc
-*.pkl
 *.h5
-*.npy
-*.csv
 uploads/
 static/uploads/
 .DS_Store
