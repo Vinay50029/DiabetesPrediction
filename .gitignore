@@ -2,7 +2,5 @@ venv/
 __pycache__/
 *.pyc
 *.h5
-uploads/
-static/uploads/
 .DS_Store
 *.zip
