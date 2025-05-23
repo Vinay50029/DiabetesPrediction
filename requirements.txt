@@ -1,3 +1,9 @@
 flask
 numpy
 joblib
+lightgbm
+scikit-learn
+opencv-python  
+tensorflow       
+keras            
+pillow           
