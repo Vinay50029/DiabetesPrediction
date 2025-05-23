@@ -1,0 +1,65 @@
+html, body {
+  height: 100%;
+  margin: 0;
+  background-color: rgba(0, 0, 0, 0.1);
+}
+.head {
+  background: url('/static/images/homepage1.png');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  padding: 60px 0;
+  color: white;
+}
+.head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.1); 
+  z-index: 0;
+}
+.head > .container, .head > .container * {
+  position: relative;
+  z-index: 1;
+}
+.drop-zone {
+  border: 2px dashed #6c757d;
+  padding: 30px;
+  text-align: center;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+.drop-zone.dragover {
+  background-color: #f8f9fa;
+}
+.drop-zone img {
+  max-height: 200px;
+  margin-top: 15px;
+  display: none;
+}
+.tcolors{
+  color: rgba(27, 27, 27, 0.827);
+}
+.navbar-nav .nav-link {
+  color: #767474 !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #333333 !important; /* Darker on hover */
+}
+.blur-bg {
+  backdrop-filter: blur(7px);          /* actual blur effect */
+  -webkit-backdrop-filter: blur(7px);  /* for Safari */
+}
+.heading {
+  font-family: "Saira", sans-serif;
+ font-optical-sizing: auto;
+ font-weight: 700;
+ font-style: normal;
+}
+h1 , h2{
+font-family: "Zilla Slab", serif;
+font-weight: 700;
+font-style: normal;
+}

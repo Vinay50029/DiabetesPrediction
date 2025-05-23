@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Diabetic Prediction</title>
+
+  <!-- fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Saira:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Zilla+Slab:ital,wght@0,300;0,400;0,500;0,600;0,700;1,300;1,400;1,500;1,600;1,700&display=swap" rel="stylesheet">
+
+
+  <!-- Bootstrap CSS -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/predict.css') }}"/>
+
+</head>
+<body>
+  <section class="head position-relative">
+    <div class="container">
+      <!-- Navigation -->
+      <nav class="navbar navbar-expand-md navbar-dark px-3 px-md-4 shadow blur-bg">
+        <div class="container-fluid">
+          <!-- Icon + Title -->
+          <a class="navbar-brand d-flex align-items-center" href="/">
+            <img src="{{ url_for('static', filename='images/icon1.png') }}" alt="icon" width="50" height="50" class="me-2 border border-dark border-2 rounded-circle">
+            <span class="fs-4 fw-bold text-black heading">Diabetic Prediction</span>
+          </a>
+  
+          <!-- Toggler -->
+          <button class="navbar-toggler ms-auto" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+          </button>
+  
+          <!-- Nav Links -->
+          <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+            <ul class="navbar-nav fs-6 fs-md-4">
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/' %}active-link{% endif %}" href="/">Home</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/predict_text' %}active-link{% endif %}" href="/predict_text">Diabeticprediction</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/about' %}active-link{% endif %}" href="/about">About</a>
+              </li>
+              <li class="nav-item">
+                <a class="nav-link {% if request.path == '/contact' %}active-link{% endif %}" href="#contact">Contact</a>
+              </li>
+            </ul>
+          </div>
+        </div>
+      </nav>
+  
+      <!-- Content Row -->
+      <div class="row align-items-center justify-content-center text-center text-lg-start mt-5 g-4 flex-lg-row flex-column-reverse">
+        <!-- Text Column -->
+        <div class="col-12 col-lg-7 d-flex align-items-center">
+          <div class="p-4 shadow rounded blur-bg w-100">
+            <h1 class="tcolors">Diabetic Retinopathy Prediction</h1>
+            <p class="fs-5 tcolors">
+              <strong>
+                Diabetic Retinopathy is a serious eye condition caused by prolonged high blood sugar levels and is a leading cause of vision loss in diabetic patients.
+                Traditional detection methods require expert analysis of retina scans, which can be time-consuming and limited in accessibility.
+                Deep learning models are now being used to automatically detect DR stages from retinal images, enabling faster and more reliable screening.
+              </strong>
+            </p>
+          </div>
+        </div>
+      
+        <!-- Image Column -->
+        <div class="col-12 col-lg-5 text-center">
+          <img src="{{ url_for('static', filename='images/retina.png') }}" class="img-fluid rounded shadow" style="max-width: 360px;" alt="Retina Image">
+        </div>
+      </div>
+      
+    </div>
+  </section>
+
+  <section class="container my-5">
+    <div class="card shadow-lg border-dark border-2">
+      <div class="card-header bg-dark text-white">
+        <h4 class="mb-0">Instructions</h4>
+      </div>
+      <div class="card-body">
+        <ul class="list-group list-group-flush">
+          <li class="list-group-item"><h5>✅ Please upload clear and properly captured retina images.</h5></li>
+          <li class="list-group-item"><h5>✅ Images must be in <strong>JPG or PNG</strong> format.</h5></li>
+          <li class="list-group-item"><h5>✅ Upload both <strong>left and right eye</strong> images for accurate analysis.</h5></li>
+          <li class="list-group-item"><h5>✅ Ensure the images are not blurry or incomplete.</h5></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container py-5 ">
+      <h1 class="text-center mb-4">Diabetic Retinopathy Prediction</h1>
+      
+      <div class="row g-4 ">
+        <!-- Upload Form -->
+        <div class="col-md-6 ">
+          <form action="/predict" method="post" enctype="multipart/form-data" class="card p-4 shadow border border-dark border-2">
+            <h4 class="mb-3">Upload Eye Images</h4>
+  
+            <!-- Left Eye -->
+            <div class="mb-3">
+              <label class="form-label"><strong>Left Eye</strong></label>
+              <div class="drop-zone" id="drop-left">
+                <span>Drag & drop or click to upload</span>
+                <input type="file" name="left_image" id="left_image" class="d-none" accept="image/*">
+                <img id="left_preview" alt="Preview">
+              </div>
+            </div>
+  
+            <!-- Right Eye -->
+            <div class="mb-3">
+              <label class="form-label"><strong>Right Eye</strong></label>
+              <div class="drop-zone" id="drop-right">
+                <span>Drag & drop or click to upload</span>
+                <input type="file" name="right_image" id="right_image" class="d-none" accept="image/*">
+                <img id="right_preview" alt="Preview">
+              </div>
+            </div>
+  
+            <button type="submit" class="btn btn-dark">Predict</button>
+          </form>
+        </div>
+  
+        <!-- Static Example -->
+        <div class="col-md-6 d-flex align-items-center">
+          <div class="card shadow-sm p-3 w-100 text-center border border-dark border-2">
+            <h5>Example Left Retina Image</h5>
+            <img src="{{ url_for('static', filename='images/left.jpg') }}" alt="Example Retina" class="img-fluid rounded">
+          </div>
+          <div class="card shadow-sm p-3 w-100 text-center border border-dark border-2">
+            <h5>Example Right Retina Image</h5>
+            <img src="{{ url_for('static', filename='images/right.jpg') }}" alt="Example Retina" class="img-fluid rounded">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer class="bg-dark text-white py-4" id="contact">
+    <div class="container text-center">
+      <p class="mb-2">Connect with me:</p>
+      <div class="d-flex justify-content-center gap-4">
+        <a href="https://www.facebook.com/profile.php?id=100088267993561" target="_blank" class="text-white">
+          <i class="bi bi-facebook" style="font-size: 1.5rem;"></i>
+        </a>
+        <a href="https://www.instagram.com/v_i_n_a_y_k_u_m_a_r_2_9/" target="_blank" class="text-white">
+          <i class="bi bi-instagram" style="font-size: 1.5rem;"></i>
+        </a>
+        <a href="vinaygattu005@email.com" class="text-white">
+          <i class="bi bi-envelope-fill" style="font-size: 1.5rem;"></i>
+        </a>
+      </div>
+    </div>
+  </footer>
+  
+  <!-- JS for Drag & Drop -->
+  <script>
+  function setupDropZone(dropZoneId, inputId, previewId) {
+    const dropZone = document.getElementById(dropZoneId);
+    const input = document.getElementById(inputId);
+    const preview = document.getElementById(previewId);
+  
+    // Click to open file
+    dropZone.addEventListener("click", () => input.click());
+  
+    // Drag over effect
+    dropZone.addEventListener("dragover", (e) => {
+      e.preventDefault();
+      dropZone.classList.add("dragover");
+    });
+  
+    dropZone.addEventListener("dragleave", () => {
+      dropZone.classList.remove("dragover");
+    });
+  
+    // Drop file
+    dropZone.addEventListener("drop", (e) => {
+      e.preventDefault();
+      dropZone.classList.remove("dragover");
+      const file = e.dataTransfer.files[0];
+      if (file && file.type.startsWith("image/")) {
+        input.files = e.dataTransfer.files;
+        showPreview(preview, file);
+      }
+    });
+  
+    // Change from input
+    input.addEventListener("change", () => {
+      const file = input.files[0];
+      if (file && file.type.startsWith("image/")) {
+        showPreview(preview, file);
+      }
+    });
+  
+    function showPreview(previewElement, file) {
+      previewElement.src = URL.createObjectURL(file);
+      previewElement.style.display = "block";
+    }
+  }
+  
+  // Setup both drop zones
+  setupDropZone("drop-left", "left_image", "left_preview");
+  setupDropZone("drop-right", "right_image", "right_preview");
+  </script>
+
+{% with messages = get_flashed_messages() %}
+  {% if messages %}
+    <script>
+      alert("{{ messages[0] }}");
+    </script>
+  {% endif %}
+{% endwith %}
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>

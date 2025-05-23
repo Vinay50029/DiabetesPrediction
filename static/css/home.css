@@ -1,0 +1,122 @@
+.head {
+  position: relative;
+  background-image: url("../images/homepage1.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* Ensure minimum height for the background to not shrink too small */
+  min-height: 650px;
+
+  /* Padding to avoid content sticking to edges */
+  padding-top: 60px;
+  padding-bottom: 60px;
+
+  /* Text color */
+  overflow: hidden; /* prevent content overflow */
+}
+
+.head::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.1); /* Slightly darker overlay for better contrast */
+  z-index: 0;
+}
+
+.head > .container,
+.head > .container * {
+  position: relative;
+  z-index: 1;
+}
+
+/* Ensure the shadow and padding inside the form and text box prevent overflow */
+.formt .userf,
+.ftext {
+ 
+  border-radius: 10px;
+}
+
+/* Responsive tweaks to avoid overflow on smaller screens */
+@media (max-width: 767.98px) {
+  .head {
+    min-height: 700px; /* allow a bit more height for stacked layout */
+    padding-top: 40px;
+    padding-bottom: 40px;
+  }
+  .formt .userf,
+  .ftext {
+    padding: 20px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.15);
+  }
+}
+
+.button-group {
+  display: grid;
+  gap: 0.5rem; /* same as gap-2 in Bootstrap */
+}
+
+
+/* Optional: minimum height for carousel items to look balanced */
+.carousel-item {
+  min-height: 300px;
+}
+
+/* Make sure carousel images don't exceed container width */
+.carousel-item img {
+  max-width: 100%;
+  height: auto;
+}
+
+.hpic{
+  width: 200px;
+  height: 150px;
+  background-color: rgba(1,1,1,1);
+}
+.tcolors{
+  color: rgba(27, 27, 27, 0.827);
+}
+.navbar-nav .nav-link {
+  color: #767474 !important;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #333333 !important; /* Darker on hover */
+}
+
+
+.blur-bg {
+  backdrop-filter: blur(7px);          /* actual blur effect */
+  -webkit-backdrop-filter: blur(7px);  /* for Safari */
+}
+
+.heading {
+ font-family: "Saira", sans-serif;
+font-optical-sizing: auto;
+font-weight: 700;
+font-style: normal;
+}
+h1{
+font-family: "Zilla Slab", serif;
+font-weight: 700;
+font-style: normal;
+}
+.navbar-dark .navbar-toggler-icon {
+  background-image: url("data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='black' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 7h22M4 15h22M4 23h22'/%3E%3C/svg%3E");
+}
+@media (max-width: 768px) {
+  .carousel-img {
+    max-width: 220px !important;
+  }
+}
+.carousel-item {
+  min-height: 440px; /* adjust as needed */
+}
+
+@media (max-width: 768px) {
+  .carousel-item {
+    min-height: 400px; /* taller on small screens if needed */
+  }
+}
+
+
