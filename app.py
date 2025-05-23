@@ -4,6 +4,7 @@ import numpy as np
 import cv2
 from keras.models import load_model
 from werkzeug.utils import secure_filename
+import time
 
 app = Flask(__name__)
 
@@ -64,6 +65,15 @@ def preprocess_image(image_path):
     return img
 
 def get_best_model_prediction(image):
+    
+    print("🔄 Starting prediction...")
+    start = time.time()
+
+    den_pred = densenet_model.predict(image)
+
+    end = time.time()
+    print(f"✅ Prediction done in {end - start:.2f} seconds")
+    
     den_pred = densenet_model.predict(image)
     den_label = labels[np.argmax(den_pred)]
     confidence = float(np.max(den_pred) * 100)
@@ -224,38 +234,3 @@ if __name__ == "__main__":
 
     # left_pred, left_conf, left_model = get_best_model_prediction(left_input)
     # right_pred, right_conf, right_model = get_best_model_prediction(right_input)
-
-
-
-# Load the 98% accurate LightGBM model
-# diabetes_model = joblib.load("model/lightgbm_real_diabetes_model.pkl")
-
-# @app.route('/predict_text', methods=['GET', 'POST'])
-# def predict_text():
-#     if request.method == 'GET':
-#         return render_template('predict_text.html')
-
-    
-#     features = np.array([[  # match order of dataset
-        
-#         1 if request.form['Gender'] == 'Male' else 0 ,
-#         int(request.form['Age']),
-#         int(request.form['Polyuria']),
-#         int(request.form['Polydipsia']),
-#         int(request.form['sudden_weight_loss']),
-#         int(request.form['weakness']),
-#         int(request.form['Polyphagia']),
-#         int(request.form['Genital_thrush']),
-#         int(request.form['visual_blurring']),
-#         int(request.form['Itching']),
-#         int(request.form['Irritability']),
-#         int(request.form['delayed_healing']),
-#         int(request.form['partial_paresis']),
-#         int(request.form['muscle_stiffness']),
-#         int(request.form['Alopecia']),
-#         int(request.form['Obesity']),
-#     ]])
-
-#     prediction = diabetes_model.predict(features)[0]
-#     result = "Diabetic" if prediction == 1 else "Not Diabetic"
-#     return render_template("result_text.html", result=result)
