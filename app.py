@@ -14,48 +14,50 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 labels = ['Mild DR', 'Moderate DR', 'No DR', 'Proliferative DR', 'Severe DR']
 
 densenet_model = load_model('model/densenet_weights.hdf5')
+# resnet_model = load_model('model/resnet_weights.hdf5')
 
-def is_valid_image(image_path):
-    img = cv2.imread(image_path)
-    if img is None:
-        print("Image not loaded.")
-        return False
 
-    h, w, c = img.shape
-    if h < 100 or w < 100 or c != 3:
-        print("Image too small or not a color image.")
-        return False
+# def is_valid_image(image_path):
+#     img = cv2.imread(image_path)
+#     if img is None:
+#         print("Image not loaded.")
+#         return False
+
+#     h, w, c = img.shape
+#     if h < 100 or w < 100 or c != 3:
+#         print("Image too small or not a color image.")
+#         return False
     
-    gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
-    brightness = np.mean(gray)
-    print("Brightness:", brightness)
-    if brightness < 24 or brightness > 145:
-        print("Image too dark or too bright.")
-        return False
+#     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
+#     brightness = np.mean(gray)
+#     print("Brightness:", brightness)
+#     if brightness < 24 or brightness > 145:
+#         print("Image too dark or too bright.")
+#         return False
 
-    gray_blur = cv2.medianBlur(gray, 5)
-    circles = cv2.HoughCircles(
-        gray_blur, cv2.HOUGH_GRADIENT, dp=1.2, minDist=100,
-        param1=50, param2=30, minRadius=30, maxRadius=150
-    )
-    circle_count = len(circles[0]) if circles is not None else 0
-    print("Circle Count:", circle_count)
-    if circle_count > 5:
-        print("Circular retina-like pattern detected.")
-        return False
+#     gray_blur = cv2.medianBlur(gray, 5)
+#     circles = cv2.HoughCircles(
+#         gray_blur, cv2.HOUGH_GRADIENT, dp=1.2, minDist=100,
+#         param1=50, param2=30, minRadius=30, maxRadius=150
+#     )
+#     circle_count = len(circles[0]) if circles is not None else 0
+#     print("Circle Count:", circle_count)
+#     if circle_count > 5:
+#         print("Circular retina-like pattern detected.")
+#         return False
 
-    hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
-    mask1 = cv2.inRange(hsv, (0, 30, 50), (10, 255, 255))   # red
-    mask2 = cv2.inRange(hsv, (10, 50, 50), (25, 255, 255))  # orange
-    mask = cv2.bitwise_or(mask1, mask2)
-    coverage = np.sum(mask > 0) / (h * w)
-    print("Coverage:", coverage)
-    if coverage <= 0.99 and coverage >= 0.10:
-        print(" Enough red/orange coverage — likely retina.")
-        return True
-    else:
-        print(" Not enough red/orange coverage.")
-        return False
+#     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
+#     mask1 = cv2.inRange(hsv, (0, 30, 50), (10, 255, 255))   # red
+#     mask2 = cv2.inRange(hsv, (10, 50, 50), (25, 255, 255))  # orange
+#     mask = cv2.bitwise_or(mask1, mask2)
+#     coverage = np.sum(mask > 0) / (h * w)
+#     print("Coverage:", coverage)
+#     if coverage <= 0.99 and coverage >= 0.10:
+#         print(" Enough red/orange coverage — likely retina.")
+#         return True
+#     else:
+#         print(" Not enough red/orange coverage.")
+#         return False
 
 
 def preprocess_image(image_path):
@@ -71,6 +73,12 @@ def get_best_model_prediction(image):
     confidence = float(np.max(den_pred) * 100)
     model_used = 'DenseNet121'
     return den_label, confidence, model_used
+# def get_resnet_prediction(image):
+#     pred = resnet_model.predict(image)
+#     label = labels[np.argmax(pred)]
+#     confidence = float(np.max(pred) * 100)
+#     model_used = 'ResNet101'
+#     return label, confidence, model_used
 
 
 @app.route('/')
