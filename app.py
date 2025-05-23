@@ -4,7 +4,7 @@ import numpy as np
 import cv2
 from keras.models import load_model
 from werkzeug.utils import secure_filename
-import time
+
 
 app = Flask(__name__)
 
@@ -18,19 +18,19 @@ densenet_model = load_model('model/densenet_weights.hdf5')
 def is_valid_image(image_path):
     img = cv2.imread(image_path)
     if img is None:
-        print("❌ Image not loaded.")
+        print("Image not loaded.")
         return False
 
     h, w, c = img.shape
     if h < 100 or w < 100 or c != 3:
-        print("❌ Image too small or not a color image.")
+        print("Image too small or not a color image.")
         return False
     
     gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
     brightness = np.mean(gray)
     print("Brightness:", brightness)
     if brightness < 24 or brightness > 145:
-        print("❌ Image too dark or too bright.")
+        print("Image too dark or too bright.")
         return False
 
     gray_blur = cv2.medianBlur(gray, 5)
@@ -41,7 +41,7 @@ def is_valid_image(image_path):
     circle_count = len(circles[0]) if circles is not None else 0
     print("Circle Count:", circle_count)
     if circle_count > 5:
-        print("✅ Circular retina-like pattern detected.")
+        print("Circular retina-like pattern detected.")
         return False
 
     hsv = cv2.cvtColor(img, cv2.COLOR_BGR2HSV)
@@ -66,14 +66,6 @@ def preprocess_image(image_path):
 
 def get_best_model_prediction(image):
     
-    print("🔄 Starting prediction...")
-    start = time.time()
-
-    den_pred = densenet_model.predict(image)
-
-    end = time.time()
-    print(f"✅ Prediction done in {end - start:.2f} seconds")
-    
     den_pred = densenet_model.predict(image)
     den_label = labels[np.argmax(den_pred)]
     confidence = float(np.max(den_pred) * 100)
@@ -88,10 +80,6 @@ def home():
     response.headers["Pragma"] = "no-cache"
     response.headers["Expires"] = "0"
     return response
-
-# @app.route('/temp')
-# def temp():
-#     return render_template('temp.html')
 
 @app.route('/about')
 def about():
@@ -129,10 +117,10 @@ def predict():
         left_path = os.path.join(app.config['UPLOAD_FOLDER'], left_filename)
         left_file.save(left_path)
         
-        # is_valid_image(left_path)
-        if not is_valid_image(left_path):
-            flash("Left image is not a valid retina scan.")
-            return redirect(url_for('predict'))
+        # # is_valid_image(left_path)
+        # if not is_valid_image(left_path):
+        #     flash("Left image is not a valid retina scan.")
+        #     return redirect(url_for('predict'))
         
         left_input = preprocess_image(left_path)
         left_pred, left_conf, left_model = get_best_model_prediction(left_input)
@@ -148,10 +136,10 @@ def predict():
         right_file.save(right_path)
         
         
-        # is_valid_image(right_path)
-        if not is_valid_image(right_path):
-            flash("Right image is not a valid retina scan.")
-            return redirect(url_for('predict'))
+        # # is_valid_image(right_path)
+        # if not is_valid_image(right_path):
+        #     flash("Right image is not a valid retina scan.")
+        #     return redirect(url_for('predict'))
 
         right_input = preprocess_image(right_path)
         right_pred, right_conf, right_model = get_best_model_prediction(right_input)
@@ -163,7 +151,9 @@ def predict():
         results['right_image'] = right_path
 
     if not results:
-        return "Please upload at least one eye image.", 400
+        flash("please upload at least one image.")
+        return redirect(url_for('predict'))
+
 
     return render_template('result.html',
                             # left_result=left_pred, left_model=left_model, left_image=left_path, right_result=right_pred, right_model=right_model, right_image=right_path,
