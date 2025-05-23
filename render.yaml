@@ -3,7 +3,7 @@ services:
     name: diabetic-predictor
     env: python
     buildCommand: pip install --upgrade pip && pip install -r requirements.txt
-    startCommand: gunicorn app:app --timeout 120
+    startCommand: gunicorn app:app -w 1 --timeout 120
     envVars:
       - key: PYTHON_VERSION
         value: 3.10
