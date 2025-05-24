@@ -4,6 +4,8 @@ import numpy as np
 import cv2
 from keras.models import load_model
 from werkzeug.utils import secure_filename
+# new 
+import tensorflow as tf
 
 
 app = Flask(__name__)
@@ -13,8 +15,16 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 
 labels = ['Mild DR', 'Moderate DR', 'No DR', 'Proliferative DR', 'Severe DR']
 
-densenet_model = load_model('model/densenet_weights.hdf5')
+# densenet_model = load_model('model/densenet_weights.hdf5')
 # resnet_model = load_model('model/resnet_weights.hdf5')
+
+# ✅ Load TFLite Model
+interpreter = tf.lite.Interpreter(model_path="model/densenetw.tflite")
+interpreter.allocate_tensors()
+
+input_details = interpreter.get_input_details()
+output_details = interpreter.get_output_details()
+
 
 
 def is_valid_image(image_path):
@@ -66,19 +76,26 @@ def preprocess_image(image_path):
     img = np.array(img).reshape(1, 32, 32, 3).astype('float32') / 255.0
     return img
 
-def get_best_model_prediction(image):
+# def get_best_model_prediction(image):
     
-    den_pred = densenet_model.predict(image)
-    den_label = labels[np.argmax(den_pred)]
-    confidence = float(np.max(den_pred) * 100)
-    model_used = 'DenseNet121'
-    return den_label, confidence, model_used
-# def get_resnet_prediction(image):
-#     pred = resnet_model.predict(image)
-#     label = labels[np.argmax(pred)]
-#     confidence = float(np.max(pred) * 100)
-#     model_used = 'ResNet101'
-#     return label, confidence, model_used
+#     den_pred = densenet_model.predict(image)
+#     den_label = labels[np.argmax(den_pred)]
+#     confidence = float(np.max(den_pred) * 100)
+#     model_used = 'DenseNet121'
+#     return den_label, confidence, model_used
+
+
+# 🧠 TFLite Prediction Function
+def get_best_model_prediction(image):
+    interpreter.set_tensor(input_details[0]['index'], image)
+    interpreter.invoke()
+    output_data = interpreter.get_tensor(output_details[0]['index'])
+    
+    pred = output_data[0]
+    pred_label_idx = np.argmax(pred)
+    pred_label = labels[pred_label_idx]
+    confidence = float(pred[pred_label_idx] * 100)
+    return pred_label, confidence, "DenseNet121-TFLite"
 
 
 @app.route('/')
@@ -232,3 +249,10 @@ if __name__ == "__main__":
 
     # left_pred, left_conf, left_model = get_best_model_prediction(left_input)
     # right_pred, right_conf, right_model = get_best_model_prediction(right_input)
+    
+    # def get_resnet_prediction(image):
+#     pred = resnet_model.predict(image)
+#     label = labels[np.argmax(pred)]
+#     confidence = float(np.max(pred) * 100)
+#     model_used = 'ResNet101'
+#     return label, confidence, model_used
