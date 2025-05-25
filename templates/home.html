@@ -10,19 +10,23 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96x96.png') }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-  <link rel="icon" href="{{ url_for('static', filename='images/icon1.png')}}">
-  <!-- Favicon SVG (optional) -->
-  <!--<link rel="icon" type="image/svg" href="{{ url_for('static', filename='images/favicon.svg') }}">-->
-  <!-- Apple Touch Icon -->
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+  
+  <!-- Apple Touch Icon (for iOS home screen) -->
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
-  <!-- Optional: Web Manifest -->
+  
+  <!-- Android Chrome -->
+  <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='images/android-chrome-192x192.png') }}">
+  <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='images/android-chrome-512x512.png') }}">
+  
+  <!-- Web Manifest -->
   <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
-  <!-- Android Chrome Icons -->
-  <!--<link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='images/android-chrome-192x192.png') }}">
-  <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='images/android-chrome-512x512.png') }}">-->
-
+  
+  <!-- Meta for iOS PWA -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Diabetes Prediction">
+
 
 
 
