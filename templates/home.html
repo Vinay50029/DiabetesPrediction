@@ -11,23 +11,21 @@
   <link rel="icon" type="image/png" sizes="32x32" href="{{ url_for('static', filename='images/favicon-32x32.png') }}">
   <link rel="icon" type="image/png" sizes="96x96" href="{{ url_for('static', filename='images/favicon-96x96.png') }}">
   <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
-  
+
   <!-- Apple Touch Icon (for iOS home screen) -->
   <link rel="apple-touch-icon" sizes="180x180" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
-  
+
   <!-- Android Chrome -->
   <link rel="icon" type="image/png" sizes="192x192" href="{{ url_for('static', filename='images/android-chrome-192x192.png') }}">
   <link rel="icon" type="image/png" sizes="512x512" href="{{ url_for('static', filename='images/android-chrome-512x512.png') }}">
-  
+
   <!-- Web Manifest -->
   <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
-  
+
   <!-- Meta for iOS PWA -->
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Diabetes Prediction">
-
-
 
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}"/>
@@ -128,18 +126,6 @@
           </div>
         </div>
       
-        <script>
-          function setActionType(actionType) {
-            const form = document.getElementById("userForm");
-            document.getElementById("action_type").value = actionType;
-            console.log("Action Type Set To:", actionType);
-            if (form.checkValidity()) {
-              form.submit();
-            } else {
-              form.reportValidity();
-            }
-          }
-        </script>
       </section>
       
 
@@ -278,7 +264,8 @@
       </div>
     </div>
   </footer>
-  
+
+  <script src="{{ url_for('static', filename='js/home.js') }}"></script>
   <!-- Optional Bootstrap JS Bundle -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
   <script src="https://twemoji.maxcdn.com/v/latest/twemoji.min.js" crossorigin="anonymous"></script>

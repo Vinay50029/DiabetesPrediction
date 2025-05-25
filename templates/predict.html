@@ -4,6 +4,8 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Diabetes Prediction</title>
+  <link rel="icon" type="image/x-icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
+
   <!-- fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -161,54 +163,6 @@
   </footer>
   
   <!-- JS for Drag & Drop -->
-  <script>
-  function setupDropZone(dropZoneId, inputId, previewId) {
-    const dropZone = document.getElementById(dropZoneId);
-    const input = document.getElementById(inputId);
-    const preview = document.getElementById(previewId);
-  
-    // Click to open file
-    dropZone.addEventListener("click", () => input.click());
-  
-    // Drag over effect
-    dropZone.addEventListener("dragover", (e) => {
-      e.preventDefault();
-      dropZone.classList.add("dragover");
-    });
-  
-    dropZone.addEventListener("dragleave", () => {
-      dropZone.classList.remove("dragover");
-    });
-  
-    // Drop file
-    dropZone.addEventListener("drop", (e) => {
-      e.preventDefault();
-      dropZone.classList.remove("dragover");
-      const file = e.dataTransfer.files[0];
-      if (file && file.type.startsWith("image/")) {
-        input.files = e.dataTransfer.files;
-        showPreview(preview, file);
-      }
-    });
-  
-    // Change from input
-    input.addEventListener("change", () => {
-      const file = input.files[0];
-      if (file && file.type.startsWith("image/")) {
-        showPreview(preview, file);
-      }
-    });
-  
-    function showPreview(previewElement, file) {
-      previewElement.src = URL.createObjectURL(file);
-      previewElement.style.display = "block";
-    }
-  }
-  
-  // Setup both drop zones
-  setupDropZone("drop-left", "left_image", "left_preview");
-  setupDropZone("drop-right", "right_image", "right_preview");
-  </script>
 
 {% with messages = get_flashed_messages() %}
   {% if messages %}
@@ -219,5 +173,7 @@
 {% endwith %}
   
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="{{ url_for('static', filename='js/predict.js') }}"></script>
+
 </body>
 </html>
