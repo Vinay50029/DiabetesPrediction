@@ -14,9 +14,13 @@
   <link rel="icon" type="image/png" sizes="16x16" href="{{ url_for('static', filename='images/favicon-16x16.png') }}">
   <link rel="shortcut icon" href="{{ url_for('static', filename='images/favicon.ico') }}">
   <!-- Apple Touch Icon -->
-  <link rel="apple-touch-icon" href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
+  <link rel="apple-touch-icon" sizes="180x180"href="{{ url_for('static', filename='images/apple-touch-icon.png') }}">
   <!-- Optional: Web Manifest -->
   <link rel="manifest" href="{{ url_for('static', filename='images/site.webmanifest') }}">
+  <!-- Optional: theme for Android and iOS -->
+  <meta name="theme-color" content="#ffffff">
+  <meta name="apple-mobile-web-app-title" content="Diabetes Prediction">
+  <meta name="application-name" content="Diabetes Prediction">
 
   <link rel="stylesheet" href="{{ url_for('static', filename='css/home.css') }}"/>
   <!-- fonts -->
