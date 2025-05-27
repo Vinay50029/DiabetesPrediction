@@ -2,3 +2,4 @@ templates/result.html linguist-vendored
 templates/result_text.html linguist-vendored
 templates/about.html linguist-vendored
 templates/predict_text.html linguist-vendored
+templates/predict.html linguist-vendored
