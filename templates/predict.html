@@ -87,10 +87,10 @@
       </div>
       <div class="card-body">
         <ul class="list-group list-group-flush">
-          <li class="list-group-item"><h5>✅ Please upload clear and properly captured retina images.</h5></li>
-          <li class="list-group-item"><h5>✅ Images must be in <strong>JPG or PNG</strong> format.</h5></li>
-          <li class="list-group-item"><h5>✅ Upload both <strong>left and right eye</strong> images for accurate analysis.</h5></li>
-          <li class="list-group-item"><h5>✅ Ensure the images are not blurry or incomplete.</h5></li>
+          <li class="list-group-item"><h5> Please upload clear and properly captured retina images.</h5></li>
+          <li class="list-group-item"><h5> Images must be in <strong>JPG or PNG</strong> format.</h5></li>
+          <li class="list-group-item"><h5> Upload both <strong>left and right eye</strong> images for accurate analysis.</h5></li>
+          <li class="list-group-item"><h5> Ensure the images are not blurry or incomplete.</h5></li>
         </ul>
       </div>
     </div>
@@ -103,7 +103,7 @@
       <div class="row g-4 ">
         <!-- Upload Form -->
         <div class="col-md-6 ">
-          <form action="/predict" method="post" enctype="multipart/form-data" class="card p-4 shadow border border-dark border-2" onsubmit="sendmail()">
+          <form action="/predict" method="post" enctype="multipart/form-data" class="card p-4 shadow border border-dark border-1" onsubmit="sendmail()">
             <h4 class="mb-3">Upload Eye Images</h4>
   
             <!-- Left Eye -->
@@ -132,11 +132,11 @@
   
         <!-- Static Example -->
         <div class="col-md-6 d-flex align-items-center">
-          <div class="card shadow-sm p-3 w-100 text-center border border-dark border-2">
+          <div class="card shadow-sm p-3 w-100 text-center border border-dark border-1">
             <h5>Example Left Retina Image</h5>
             <img src="{{ url_for('static', filename='images/left.jpg') }}" alt="Example Retina" class="img-fluid rounded">
           </div>
-          <div class="card shadow-sm p-3 w-100 text-center border border-dark border-2">
+          <div class="card shadow-sm p-3 w-100 text-center border border-dark border-1">
             <h5>Example Right Retina Image</h5>
             <img src="{{ url_for('static', filename='images/right.jpg') }}" alt="Example Retina" class="img-fluid rounded">
           </div>
